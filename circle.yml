@@ -1,0 +1,25 @@
+machine:
+  timezone:
+    Asia/Tokyo
+  services:
+    - docker
+  ruby:
+    version:
+      2.3.3
+dependencies:
+  cache_directories:
+    - "~/cache"
+    - "vendor/bundle"
+  override:
+    - bundle -j4 --path=vendor/bundle
+#    - bundle install:
+#        timeout: 180
+database:
+  pre:
+  override:
+    - bundle exec rails db:create db:schema:load RAILS_ENV=test
+    - bundle exec rails db:migrate RAILS_ENV=test
+test:
+  override:
+    - bundle exec rails test
+    
