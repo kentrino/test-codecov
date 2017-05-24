@@ -6,4 +6,8 @@ class User < ApplicationRecord
   def downcase_name
     name.downcase
   end
+
+  def base64_name
+    Base64.encode64(name)
+  end
 end
