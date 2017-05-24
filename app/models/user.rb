@@ -10,4 +10,8 @@ class User < ApplicationRecord
   def base64_name
     Base64.encode64(name)
   end
+
+  def sha1_name
+    Digest::SHA1.hexdigest name
+  end
 end
