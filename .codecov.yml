@@ -1,0 +1,15 @@
+comment:
+  # specify the layout of comment by codecov
+  layout: "reach, diff, flags, files"
+  # default: update, if exists. Otherwise post new.
+  # once: update, if exists. Otherwise post new. Skip if deleted.
+  # new: delete old and post new.
+  # spammy: post new (do not delete old comments).
+  behavior: default
+  # if true: only post the comment if coverage changes
+  require_changes: false
+  require_base: no        # [yes :: must have a base report to post]
+  require_head: yes       # [yes :: must have a head report to post]
+  branches: 
+	  - master
+	  - feature/*
