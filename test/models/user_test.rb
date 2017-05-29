@@ -16,4 +16,11 @@ class UserTest < ActiveSupport::TestCase
     user.name = name
     assert_equal(expected, user.downcase_name)
   end
+
+  def test_sha1_name
+    name = 'Yamada Tarou'
+    expected = 'c90ce67ca44aec6bd29148370c28cb526c6504f4'
+    user = User.new(name: name)
+    assert_equal(expected, user.sha1_name)
+  end
 end
