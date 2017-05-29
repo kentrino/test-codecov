@@ -1,3 +1,23 @@
+const path = require('path');
+
+const webpackConfig = {
+  devtool: 'inline-source-map',
+  resolve: {
+    root: path.join(__dirname, 'src'),
+    extensions: ['', '.js', '.vue']
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.js$/,
+        loaders: ['babel'],
+        exclude: [/node_modules/]
+      },
+      { test: /\.vue$/, loader: 'vue' },
+    ]
+  }
+};
+
 module.exports = function(config) {
   config.set({
     // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -9,7 +29,7 @@ module.exports = function(config) {
     files: [
       //'node_modules/jquery/dist/jquery.js',
       // 'src.js',
-      'spec.js'
+      'js/test/**/*.spec.js'
     ],
     // list of files to exclude
     exclude: [
@@ -17,7 +37,7 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'src.js': ['coverage']
+      'js/test/**/*.spec.js': ['webpack', 'sourcemap', 'coverage']
     },
     // test results reporter to use
     // possible values: 'dots', 'progress'
@@ -25,6 +45,11 @@ module.exports = function(config) {
     reporters: ['progress', 'coverage'],
     coverageReporter: {
       reporters: [{type: 'lcov'}]
+    },
+    webpack: webpackConfig,
+    webpackMiddleware: {
+      stats: 'normal',
+      noInfo: true
     },
     // web server port
     port: 9876,
