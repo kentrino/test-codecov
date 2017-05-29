@@ -12,7 +12,8 @@ dependencies:
     - "~/cache"
     - "vendor/bundle"
   pre:
-    - npm install -g
+    - npm install yarn -g
+    - yarn install
   override:
     - bundle -j4 --path=vendor/bundle
 #    - bundle install:
