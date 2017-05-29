@@ -10,6 +10,11 @@ comment:
   require_changes: false
   require_base: no        # [yes :: must have a base report to post]
   require_head: yes       # [yes :: must have a head report to post]
-  branches: 
-    - master
-    - feature/*
+coverage:
+  status:
+    patch:
+      default:
+        target: 100%
+        only_pulls: true
+        branches: 
+          - feature/*
