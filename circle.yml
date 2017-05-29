@@ -4,8 +4,9 @@ machine:
   services:
     - docker
   ruby:
-    version:
-      2.3.3
+    version: 2.3.3
+  node:
+    version: 7.10.0
 dependencies:
   cache_directories:
     - "~/cache"
@@ -21,5 +22,6 @@ database:
     - bundle exec rails db:migrate RAILS_ENV=test
 test:
   override:
+    - npm run test
     - bundle exec rails test
     
