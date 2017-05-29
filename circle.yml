@@ -11,6 +11,8 @@ dependencies:
   cache_directories:
     - "~/cache"
     - "vendor/bundle"
+  pre:
+    - npm install -g
   override:
     - bundle -j4 --path=vendor/bundle
 #    - bundle install:
