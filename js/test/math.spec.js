@@ -1,4 +1,4 @@
-import {add} from '../math.js';
+import {add} from '../src/math.js';
 
 describe('addition', function () {
     it('1 + 1 = 2', function () {
