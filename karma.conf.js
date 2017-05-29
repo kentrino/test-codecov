@@ -3,69 +3,77 @@ const path = require('path');
 const webpackConfig = {
   devtool: 'inline-source-map',
   resolve: {
-    root: path.join(__dirname, 'src'),
-    extensions: ['', '.js', '.vue']
+    root: path.join(__dirname, 'js/src'),
+    extensions: ['', '.js']   // ''が必要、、、
   },
   module: {
+    preLoaders: [
+      // coverageを出力するのに必要
+      {
+        test: /\.js$/,
+        include: path.resolve('js/src'),
+        exclude: path.resolve('js/test'),
+        loader: 'isparta'
+      }
+    ],
     loaders: [
       {
         test: /\.js$/,
         loaders: ['babel'],
         exclude: [/node_modules/]
-      },
-      { test: /\.vue$/, loader: 'vue' },
+      }
     ]
   }
 };
 
 module.exports = function(config) {
   config.set({
-    // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
-    // frameworks to use
-    // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['mocha', 'chai'],
-    // list of files / patterns to load in the browser
     files: [
-      //'node_modules/jquery/dist/jquery.js',
-      // 'src.js',
-      'js/test/**/*.spec.js'
+      //'js/src/**/*.js', // これを足すとファイルがないエラー
+      'js/test/**/*.test.js'
     ],
-    // list of files to exclude
     exclude: [
     ],
-    // preprocess matching files before serving them to the browser
-    // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'js/test/**/*.spec.js': ['webpack', 'sourcemap'],
-      'js/src/**/*.js': ['coverage']
+      //'js/src/**/*.js': ['coverage'], // 不要っぽい
+      'js/test/**/*.test.js': ['webpack']
     },
-    // test results reporter to use
-    // possible values: 'dots', 'progress'
-    // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress', 'coverage'],
+    reporters: ['spec', 'coverage'],
     coverageReporter: {
       reporters: [{type: 'lcov'}]
+      // type: 'html',
+      // dir: 'coverage'
     },
     webpack: webpackConfig,
     webpackMiddleware: {
       stats: 'normal',
       noInfo: true
     },
-    // web server port
-    port: 9876,
+    // port: 9876, // web server port
+    
     // enable / disable colors in the output (reporters and logs)
     colors: true,
-    // level of logging
+    
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
     logLevel: config.LOG_INFO,
+    
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: true,
-    // start these browsers
-    // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
+    
     browsers: ['Chrome'],
-    // Continuous Integration mode
-    // if true, Karma captures browsers, runs the tests and exits
-    singleRun: true
+    
+    // Continuous Integration mode. if true, Karma captures browsers, runs the tests and exits
+    singleRun: true,
+    
+    plugins: [
+      require("karma-webpack"),
+      require("karma-mocha"),
+      require('karma-chrome-launcher'),
+      require('karma-spec-reporter'),
+      require("karma-chai"),
+      require("karma-coverage"),
+    ]
   })
 }
