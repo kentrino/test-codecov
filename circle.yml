@@ -27,5 +27,5 @@ test:
   override:
     - npm run test
     - bundle exec rails test
-  post:
-    - npm run codecov
+#  post:
+#    - npm run codecov
